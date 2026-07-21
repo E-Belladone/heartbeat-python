@@ -32,8 +32,9 @@ uv run heartbeat-poller   # on the machine that can run `tailscale status`
 uv run heartbeat-proxy    # behind your reverse proxy (see deploy/nginx/)
 ```
 
-Frontend (the public site widget) lives in `frontend/` and talks to
-`/api/presence`.
+Frontend: a minimal demo page in `frontend/` (the presence widget + the
+websocket client) that talks to `/api/presence`. Build it with
+`cd frontend && npm install && npm run build`.
 
 ## Scope
 

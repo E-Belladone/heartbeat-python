@@ -1,0 +1,56 @@
+/* Rose Pine (main variant), dark by default */
+:root {
+  --base: #191724;
+  --surface: #1f1d2e;
+  --overlay: #26233a;
+  --muted: #6e6a86;
+  --subtle: #908caa;
+  --text: #e0def4;
+  --love: #eb6f92;
+  --gold: #f6c177;
+  --rose: #ebbcba;
+  --pine: #31748f;
+  --foam: #9ccfd8;
+  --iris: #c4a7e7;
+  --highlight-low: #21202e;
+  --highlight-med: #403d52;
+  --highlight-high: #524f67;
+  /* the cute layer: a rose sparkle wanders, a bigger iris one presses.
+     Components that style their own pointer use var(--cursor-point) so it
+     wins everywhere; the native fallbacks keep odd browsers usable */
+  --cursor-wander: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 1L13.2 8.8L21 11L13.2 13.2L11 21L8.8 13.2L1 11L8.8 8.8Z' fill='%23ebbcba' stroke='%23191724' stroke-width='1'/%3E%3C/svg%3E") 11 11, auto;
+  --cursor-point: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M13 1L15.6 10.4L25 13L15.6 15.6L13 25L10.4 15.6L1 13L10.4 10.4Z' fill='%23c4a7e7' stroke='%23191724' stroke-width='1'/%3E%3C/svg%3E") 13 13, pointer;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--base);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  cursor: var(--cursor-wander, auto);
+}
+
+a,
+button,
+select,
+summary,
+input[type='checkbox'],
+input[type='radio'] {
+  cursor: var(--cursor-point, pointer);
+}
+
+a {
+  color: var(--foam);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--iris);
+  text-decoration: underline;
+}
