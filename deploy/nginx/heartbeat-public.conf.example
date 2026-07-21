@@ -1,0 +1,36 @@
+# Example public vhost for the presence proxy. Serves the built site and
+# proxies /api to the proxy process. Fill in your domain; terminate TLS
+# wherever suits you (this example is plain HTTP behind your own TLS edge).
+server {
+    listen 80;
+    server_name example.org;  # <- your domain
+
+    root /var/www/heartbeat/public;  # <- where you built frontend/dist
+    index index.html;
+
+    # websocket presence
+    location = /api/presence/ws {
+        proxy_pass http://127.0.0.1:8100;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 1h;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8100;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+
+    # content-hashed assets cache forever; the unhashed shell always revalidates
+    location /assets/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+    location = /index.html { add_header Cache-Control "no-cache"; }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
