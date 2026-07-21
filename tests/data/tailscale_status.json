@@ -1,0 +1,36 @@
+{
+  "Version": "1.98.8",
+  "TUN": true,
+  "BackendState": "Running",
+  "Self": {
+    "ID": "1111111111111111",
+    "PublicKey": "nodekey:0000000000000000000000000000000000000000000000000000000000000000",
+    "HostName": "odroid",
+    "DNSName": "odroid.tail0000.ts.net.",
+    "OS": "linux",
+    "UserID": 1,
+    "TailscaleIPs": ["100.64.0.1"],
+    "Online": true,
+    "InNetworkMap": true
+  },
+  "Peer": {
+    "nodekey:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": {
+      "ID": "2222222222222222",
+      "HostName": "laptop",
+      "DNSName": "laptop.tail0000.ts.net.",
+      "OS": "linux",
+      "TailscaleIPs": ["100.64.0.2"],
+      "Online": true,
+      "LastSeen": "0001-01-01T00:00:00Z"
+    },
+    "nodekey:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb": {
+      "ID": "3333333333333333",
+      "HostName": "phone",
+      "DNSName": "phone.tail0000.ts.net.",
+      "OS": "android",
+      "TailscaleIPs": ["100.64.0.3"],
+      "Online": false,
+      "LastSeen": "2026-07-06T21:14:00Z"
+    }
+  }
+}
