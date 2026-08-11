@@ -12,3 +12,9 @@ CREATE ROLE heartbeat_proxy LOGIN PASSWORD 'CHANGE-ME';
 
 -- ingest: the only writer of signal events
 CREATE ROLE heartbeat_ingest LOGIN PASSWORD 'CHANGE-ME';
+
+-- logger: reads and edits the substance catalogue. Deliberately has no grant on
+-- anything in `presence` or `signal`: the catalogue is a separate concern from
+-- presence, and keeping the two role sets disjoint means neither service can be
+-- widened into the other by accident.
+CREATE ROLE heartbeat_logger LOGIN PASSWORD 'CHANGE-ME';

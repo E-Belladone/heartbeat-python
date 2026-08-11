@@ -27,3 +27,10 @@ GRANT SELECT ON signal.tokens TO heartbeat_ingest;
 GRANT INSERT ON signal.events TO heartbeat_ingest;
 GRANT SELECT (id, at) ON signal.events TO heartbeat_ingest;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA signal TO heartbeat_ingest;
+
+-- logger: owns the substance catalogue, full CRUD so the catalogue can be
+-- edited at runtime rather than only at deploy. No grant is issued to
+-- heartbeat_proxy on anything in this schema, and that absence is the fence:
+-- the public-facing process cannot read the catalogue even by accident.
+GRANT USAGE ON SCHEMA substance TO heartbeat_logger;
+GRANT SELECT, INSERT, UPDATE, DELETE ON substance.catalog, substance.templates TO heartbeat_logger;

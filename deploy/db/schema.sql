@@ -86,3 +86,37 @@ SELECT
     extract(epoch FROM max(at))::bigint AS strong_last
 FROM signal.events
 WHERE kind IN ('start', 'pulse');
+
+-- ---------------------------------------------------------------- substance
+-- The substance logger's catalogue. Two reference tables and no log table:
+-- what someone takes is theirs, so the beacon ships the *shape* of a catalogue
+-- plus a neutral example seed (seed_substances.sql) and nothing else. Add your
+-- own log table if you want one; the kinetics model reads the catalogue alone.
+CREATE SCHEMA IF NOT EXISTS substance;
+
+-- One substance and the absorption model that draws its curve. `model_family`
+-- selects the functional form and `params` carries that family's parameters,
+-- rather than fixed columns, because the families do not share a parameter set:
+-- a depot ester has no dose split and an extended-release tablet has no serum
+-- calibration. `unit_per_mg` lets a substance be logged in its natural unit
+-- (µg for B12, g for alcohol) while the model works in mg throughout.
+CREATE TABLE IF NOT EXISTS substance.catalog (
+    name TEXT PRIMARY KEY,
+    model_family TEXT NOT NULL,
+    params JSONB NOT NULL DEFAULT '{}'::jsonb,
+    label TEXT,
+    color TEXT,
+    category TEXT,
+    unit TEXT NOT NULL DEFAULT 'mg',
+    unit_per_mg DOUBLE PRECISION NOT NULL DEFAULT 1.0 CHECK (unit_per_mg > 0)
+);
+
+-- A named intake preset: "espresso" -> caffeine 80 mg. ON DELETE RESTRICT
+-- rather than CASCADE, so removing a substance cannot silently take a set of
+-- presets with it.
+CREATE TABLE IF NOT EXISTS substance.templates (
+    name TEXT PRIMARY KEY,
+    substance TEXT NOT NULL REFERENCES substance.catalog (name) ON DELETE RESTRICT,
+    dose_mg DOUBLE PRECISION NOT NULL CHECK (dose_mg > 0),
+    label TEXT
+);
